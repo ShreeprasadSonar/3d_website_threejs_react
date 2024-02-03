@@ -1,0 +1,15 @@
+https://www.youtube.com/watch?v=FkowOdMjvYo
+
+1. Vite : to create react project, npm create vite@latest ./
+
+2. Tailwindcss: Utility-first CSS framework packed with classes,https://tailwindcss.com/docs/guides/vite
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+3. Imported CSS code from this gist: https://gist.github.com/adrianhajdin/7bc0603ee0b1bd2872b80a62c24b5e5f
+
+4. React Router:  npm install react-router-dom
+
+5. React Renderer for three.js: Package to implement 3d, npm install @react-three/fiber
+https://docs.pmnd.rs/react-three-fiber/getting-started/introduction
+
