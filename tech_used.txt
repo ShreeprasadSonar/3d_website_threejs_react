@@ -13,3 +13,12 @@ npx tailwindcss init -p
 5. React Renderer for three.js: Package to implement 3d, npm install @react-three/fiber
 https://docs.pmnd.rs/react-three-fiber/getting-started/introduction
 
+6. Drei: Addition to react-three/fiber, primarily using to convert normal HTML to 3d.
+npm install @react-three/drei
+
+7. Finding Qulity 3d Models: https://sketchfab.com/feed
+
+8. To load glb modes into 3js: https://gltf.pmnd.rs/
+
+9. Enable Animations: @react-spring/three
+npm install @react-spring/three
