@@ -4,15 +4,9 @@ import { Suspense, useState } from 'react' //
 import Loader from '../components/Loader'
 
 import Earth from '../models/earth';
-import Sky from '../models/sky';
 import Plane from '../models/Plane';
 import Van from '../models/Van';
-
-
-
-      {/* <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>
-        PopUP
-      </div> */}
+import HomeInfo from '../components/HomeInfo';
 
 const Home = () => {
   const [isRotating, setIsRotating] = useState(false);
@@ -21,7 +15,7 @@ const Home = () => {
   const adjustEarthForScreenSize = () => {
     let screenScale = null;
     let screenPosition = [0, 0, 0];
-    let rotation = [0.13, 0, 0];
+    let rotation = [0.13, 4.2, 0];
 
     if(window.innerWidth < 768) {
       screenScale = [0.33, 0.33, 0.33];
@@ -66,6 +60,9 @@ const Home = () => {
   const [vanScale, vanPosition, vanRotation] = adjustVanForScreenSize();
   return (
     <section className='w-full h-screen relative'>
+      <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>
+        {currentStage && <HomeInfo currentStage={currentStage} />}
+      </div>
       {/* Canvas is a component from react-three/fiber that allows us to create 3D objects */}
       <Canvas 
         className={`w-full h-screen gradient-background ${isRotating ? 'cursor-grabbing' : 'cursor-grab'}`}
