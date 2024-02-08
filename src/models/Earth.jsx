@@ -9,16 +9,18 @@ Title: Low Poly Planet Earth
 import React, { useRef, useEffect } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import earthScene from "../assets/3d/low_poly_planet_earth.glb";
+import earthScene from "../assets/3d/GLB/island.glb";
+import vanScene from '../assets/3d/fedex_van.glb'
 import { a } from "@react-spring/three";
+import Van from "./Van";
 
-const Earth = ({isRotating, setIsRotating, ...props}) => {
+const Earth = ({isRotating, setIsRotating, setCurrentStage, ...props}) => {
   const earthRef = useRef();
 
   const { gl, viewport } = useThree();
   const { nodes, materials } = useGLTF(earthScene);
 
-  const lastx = useRef(0);
+  const lastX = useRef(0);
   const rotationSpeed = useRef(0);
   const dampingFactor = 0.95;
 
@@ -29,7 +31,7 @@ const Earth = ({isRotating, setIsRotating, ...props}) => {
 
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
 
-    lastx.current = clientX;
+    lastX.current = clientX;
   }
 
   const handlePoniterUp = (e) => {
@@ -54,12 +56,32 @@ const Earth = ({isRotating, setIsRotating, ...props}) => {
   }
 
   const handleKeyDown = (e) => {
-    if(e.key === 'ArrowLeft') {
-      if(!isRotating) setIsRotating(true);
-      earthRef.current.position.y += 0.01 * Math.PI;
-    } else if(e.key === 'ArrowRight') {
-      if(!isRotating) setIsRotating(true);
-      earthRef.current.position.y -= 0.01 * Math.PI;
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      if (!isRotating) setIsRotating(true);
+  
+      // Define the rotation increment
+      const rotationIncrement = 0.02 * Math.PI;
+  
+      // Determine the direction of rotation based on the arrow key
+      const direction = e.key === 'ArrowLeft' ? 1 : -1;
+  
+      // Update the rotation of the earth
+      earthRef.current.rotation.y += direction * rotationIncrement;
+    }
+
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (!isRotating) setIsRotating(true);
+  
+      // Define the rotation increment
+      const rotationIncrement = 0.02 * Math.PI;
+  
+      // Determine the direction of rotation based on the arrow key
+      const direction = e.key === 'ArrowUp' ? 1 : -1;
+  
+      // Update the rotation of the earth
+      earthRef.current.rotation.y += direction * rotationIncrement;
     }
   }
 
@@ -131,14 +153,727 @@ const Earth = ({isRotating, setIsRotating, ...props}) => {
   }, [gl, handlePoniterDown, handlePoniterUp, handlePoniterMove]);
 
   return (
-    <a.group ref={earthRef} {...props}>
-      <mesh {...props}
-        geometry={nodes.Object_Planet_0.geometry}
-        material={materials.Planet}
-        position={[-0.045, 1.247, 0.066]}
-        rotation={[Math.PI, 0, Math.PI]}
+    <group>
+      <a.group ref={earthRef} {...props}>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Street.geometry}
+        material={materials["Blue 3"]}
+        position={[0, -0.05, 0]}
+        scale={[11.2, 1, 11.2]}
       />
-    </a.group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Landscape.geometry}
+        material={materials.Island}
+        position={[0, -0.02, 0]}
+      />
+      <group
+        position={[5.061, -1.037, -3.078]}
+        rotation={[Math.PI, -1.045, Math.PI]}
+        scale={1.189}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Mesh.geometry}
+          material={materials["Red 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Mesh_1.geometry}
+          material={materials.White}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Mesh_2.geometry}
+          material={materials["Red 2"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Mesh_3.geometry}
+          material={materials["Red 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Mesh_4.geometry}
+          material={materials["Red 1"]}
+        />
+      </group>
+      <group
+        position={[-3.903, 0, 9.876]}
+        rotation={[Math.PI / 2, 0, 0.325]}
+        scale={0.335}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.MAILBOX_1.geometry}
+          material={materials["Blue 2"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.MAILBOX_2.geometry}
+          material={materials["Red 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.MAILBOX_3.geometry}
+          material={materials.White}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Stones.geometry}
+        material={materials["Red 3"]}
+        position={[7.885, 0.44, 4.755]}
+        rotation={[Math.PI / 2, 0, -1.238]}
+      />
+      <group
+        position={[4.521, -0.024, -6.169]}
+        rotation={[Math.PI / 2, 0, -1.302]}
+        scale={6.083}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cabin_shed_1.geometry}
+          material={materials["Red 2"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cabin_shed_2.geometry}
+          material={materials["Blue 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cabin_shed_3.geometry}
+          material={materials.White}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cabin_shed_4.geometry}
+          material={materials["Red 2"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cabin_shed_5.geometry}
+          material={materials.White}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cabin_shed_6.geometry}
+          material={materials["Red 2"]}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Water.geometry}
+        material={materials.Water}
+        position={[0, -1, 0]}
+        scale={[1000, 1, 1000]}
+      />
+      <group position={[-9.098, -0.032, -2.811]}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder024.geometry}
+          material={materials["Blue 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder024_1.geometry}
+          material={materials["Blue 2"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder024_2.geometry}
+          material={materials["Red 1"]}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.BUMPER_BezierCurve.geometry}
+        material={materials["Blue 1"]}
+        position={[2.557, -0.037, 6.757]}
+        rotation={[Math.PI / 2, 0, -0.425]}
+        scale={0.889}
+      />
+      <group
+        position={[2.557, -0.037, 6.757]}
+        rotation={[Math.PI / 2, 0, -0.425]}
+        scale={0.889}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.HEADLIGHTS_Cylinder_1.geometry}
+          material={materials.White}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.HEADLIGHTS_Cylinder_2.geometry}
+          material={materials.Lights}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.HEADLIGHTS_Cylinder_3.geometry}
+          material={materials.Lights}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Sausage.geometry}
+        material={materials["Red 1"]}
+        position={[2.557, -0.037, 6.757]}
+        rotation={[Math.PI / 2, 0, -0.425]}
+        scale={0.889}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.SERVING_COUNTER_Plane.geometry}
+        material={materials.White}
+        position={[2.557, -0.037, 6.757]}
+        rotation={[Math.PI / 2, 0, -0.425]}
+        scale={0.889}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.TIRES_Cylinder005.geometry}
+        material={materials["Blue 1"]}
+        position={[2.557, -0.037, 6.757]}
+        rotation={[Math.PI / 2, 0, -0.425]}
+        scale={0.889}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.TRUCK_Cube004.geometry}
+        material={materials.White}
+        position={[2.557, -0.037, 6.757]}
+        rotation={[Math.PI / 2, 0, -0.425]}
+        scale={0.889}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.TRUCK_Cube001.geometry}
+        material={materials["Red 2"]}
+        position={[2.557, -0.037, 6.757]}
+        rotation={[Math.PI / 2, 0, -0.425]}
+        scale={0.889}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.TRUCK_Cube002.geometry}
+        material={materials["Blue 1"]}
+        position={[2.557, -0.037, 6.757]}
+        rotation={[Math.PI / 2, 0, -0.425]}
+        scale={0.889}
+      />
+      <group
+        position={[-9.064, -0.007, -1.773]}
+        rotation={[Math.PI / 2, 0, -2.844]}
+        scale={1.091}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Camper1_Mesh006_1.geometry}
+          material={materials.White}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Camper1_Mesh006_2.geometry}
+          material={materials["Blue 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Camper1_Mesh006_3.geometry}
+          material={materials["Blue 3"]}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Chair1_Mesh007.geometry}
+        material={materials["Blue 2"]}
+        position={[-9.308, 0, -1.787]}
+        rotation={[Math.PI / 2, 0, -2.844]}
+        scale={1.091}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Flamingo5_Mesh018.geometry}
+        material={materials["Red 1"]}
+        position={[-9.064, -0.007, -1.773]}
+        rotation={[Math.PI / 2, 0, -2.844]}
+        scale={1.091}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Lights4_Mesh012.geometry}
+        material={materials.Lights}
+        position={[-9.064, -0.007, -1.773]}
+        rotation={[Math.PI / 2, 0, -2.844]}
+        scale={1.091}
+      />
+      <group
+        position={[-9.551, 0.578, -1.227]}
+        rotation={[Math.PI / 2, 0, -1.653]}
+        scale={1.091}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Plant34_Mesh019_1.geometry}
+          material={materials["Blue 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Plant34_Mesh019_2.geometry}
+          material={materials["Blue 3"]}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Rugs1_Mesh011.geometry}
+        material={materials["Red 2"]}
+        position={[-9.064, -0.007, -1.773]}
+        rotation={[Math.PI / 2, 0, -2.844]}
+        scale={1.091}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Stool1_Mesh008.geometry}
+        material={materials.White}
+        position={[-9.064, -0.007, -1.773]}
+        rotation={[Math.PI / 2, 0, -2.844]}
+        scale={1.091}
+      />
+      <group
+        position={[-8.949, -0.007, -1.474]}
+        rotation={[Math.PI / 2, 0, -2.844]}
+        scale={1.091}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Table2_Mesh009_1.geometry}
+          material={materials.White}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Table2_Mesh009_2.geometry}
+          material={materials["Blue 2"]}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Text.geometry}
+        material={materials["Red 1"]}
+        position={[-9.064, -0.028, -1.773]}
+        rotation={[Math.PI / 2, 0, -2.844]}
+        scale={1.115}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cube.geometry}
+        material={materials["Blue 2"]}
+        position={[-9.895, 0.567, -2.7]}
+        rotation={[0.001, 0.009, 0.001]}
+        scale={[0.015, 0.6, 0.015]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cube001.geometry}
+        material={materials["Blue 2"]}
+        position={[-10.269, 0.567, -1.419]}
+        rotation={[0.043, -0.023, 0.006]}
+        scale={[0.015, 0.6, 0.015]}
+      />
+      <group
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes["Philips_PM5544_(SECAM_variation)_1"].geometry}
+          material={materials["Red 2"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes["Philips_PM5544_(SECAM_variation)_2"].geometry}
+          material={materials["Blue 2"]}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.STAGEmodul_Cube.geometry}
+        material={materials["Blue 1"]}
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cube000_Cube014.geometry}
+        material={materials.White}
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cube001_Cube003.geometry}
+        material={materials.White}
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cube002_Cube021.geometry}
+        material={materials.White}
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cube003_Cube022.geometry}
+        material={materials.White}
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cube004_Cube023.geometry}
+        material={materials.White}
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cube005_Cube024.geometry}
+        material={materials.White}
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cube006_Cube025.geometry}
+        material={materials.White}
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cube007_Cube026.geometry}
+        material={materials.White}
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <group
+        position={[-6.85, -0.043, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube012_Cube039_1.geometry}
+          material={materials["Blue 3"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube012_Cube039_2.geometry}
+          material={materials["Blue 1"]}
+        />
+      </group>
+      <group
+        position={[-6.85, -0.043, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube013_Cube040_1.geometry}
+          material={materials["Blue 3"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube013_Cube040_2.geometry}
+          material={materials["Blue 1"]}
+        />
+      </group>
+      <group
+        position={[-6.85, -0.043, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube014_Cube050_1.geometry}
+          material={materials["Blue 3"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube014_Cube050_2.geometry}
+          material={materials["Blue 1"]}
+        />
+      </group>
+      <group
+        position={[-6.85, -0.043, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube015_Cube051_1.geometry}
+          material={materials["Blue 3"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube015_Cube051_2.geometry}
+          material={materials["Blue 1"]}
+        />
+      </group>
+      <group
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube016_Cube043_1.geometry}
+          material={materials["Blue 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube016_Cube043_2.geometry}
+          material={materials.Lights}
+        />
+      </group>
+      <group
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube017_Cube044_1.geometry}
+          material={materials["Blue 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube017_Cube044_2.geometry}
+          material={materials.Lights}
+        />
+      </group>
+      <group
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube018_Cube045_1.geometry}
+          material={materials["Blue 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube018_Cube045_2.geometry}
+          material={materials.Lights}
+        />
+      </group>
+      <group
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube019_Cube046_1.geometry}
+          material={materials["Blue 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube019_Cube046_2.geometry}
+          material={materials.Lights}
+        />
+      </group>
+      <group
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube020_Cube047_1.geometry}
+          material={materials["Blue 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube020_Cube047_2.geometry}
+          material={materials.Lights}
+        />
+      </group>
+      <group
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube021_Cube048_1.geometry}
+          material={materials["Blue 1"]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube021_Cube048_2.geometry}
+          material={materials.Lights}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Hardcase000_Cube054.geometry}
+        material={materials["Blue 1"]}
+        position={[-6.349, -0.203, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Hardcase001_Cube033.geometry}
+        material={materials["Blue 1"]}
+        position={[-6.34, -0.21, 3.129]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Hardcase002_Cube055.geometry}
+        material={materials["Blue 1"]}
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Hardcase003_Cube056.geometry}
+        material={materials["Blue 1"]}
+        position={[-6.85, -0.018, 3.688]}
+        rotation={[Math.PI / 2, 0, 0.977]}
+        scale={0.31}
+      />
+      <group
+        position={[3.295, 0.389, 9.106]}
+        rotation={[Math.PI / 2, 0, 0]}
+        scale={0.262}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.group74620784.geometry}
+          material={materials.White}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.group74620784_1.geometry}
+          material={materials.White}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.group74620784_2.geometry}
+          material={materials.White}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.group74620784_3.geometry}
+          material={materials.White}
+        />
+        </group>
+      </a.group>
+    </group>
   );
 }
 

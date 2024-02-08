@@ -53,8 +53,9 @@ body:has(.card[data-color="green"]:hover) {
   }
 
   .header {
-    @apply flex justify-between items-center sm:px-16 px-8 py-4 max-w-5xl mx-auto absolute top-0 bg-transparent z-10 right-0 left-0;
+    @apply flex justify-between items-center sm:px-16 px-8 py-4 w-full mx-auto top-0 bg-transparent z-10;
   }
+
 
   .footer {
     @apply max-w-5xl mx-auto sm:px-16 pb-6 px-8 flex flex-col gap-7;
@@ -182,4 +183,10 @@ body:has(.card[data-color="green"]:hover) {
   border: #fff;
   box-shadow: 0.6vmin 0.6vmin #fff, 1vmin 1vmin #d2e4ff, 1vmin 1vmin #d2e4ff,
     0.65vmin 1vmin #d2e4ff, 1vmin 0.65vmin #d2e4ff;
+}
+
+.gradient-background {
+  width: 100%;
+  height: 100vh; /* Full height of the viewport */
+  background: linear-gradient(to bottom, #660099 1%, #B0C0E1 40%); /* Define your gradient colors */
 }
