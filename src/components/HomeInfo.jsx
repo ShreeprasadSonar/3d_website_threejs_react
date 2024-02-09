@@ -17,7 +17,7 @@ const TrackPackage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        window.location.href = `https://example.com/track?trackingNumber=${trackingNumber}`;
+        window.location.href = `/track`;
     };
 
     return (
