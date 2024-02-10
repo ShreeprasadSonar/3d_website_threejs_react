@@ -22,3 +22,5 @@ npm install @react-three/drei
 
 9. Enable Animations: @react-spring/three
 npm install @react-spring/three
+
+10 Firebase for hosting: https://www.freecodecamp.org/news/how-to-deploy-a-react-app-with-firebase/
